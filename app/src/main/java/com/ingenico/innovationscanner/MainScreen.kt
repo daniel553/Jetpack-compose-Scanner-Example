@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ingenico.innovationscanner.Router.Login
+import com.ingenico.innovationscanner.cart.CartPage
 import com.ingenico.innovationscanner.singon.LoginPage
 
 @Composable
@@ -17,11 +18,8 @@ fun MainScreen(){
             LoginPage(navController = navController)
         }
 
-        /**TODO: Add cart page
-        composable(Router.SignUp.route) {
+        composable(Router.Cart.route) {
             CartPage(navController = navController)
         }
-        **/
-
     }
 }
