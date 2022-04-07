@@ -1,5 +1,6 @@
 package com.ingenico.innovationscanner.cart
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,8 +22,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.zxing.integration.android.IntentIntegrator
+import com.ingenico.innovationscanner.MainActivity
 import com.ingenico.innovationscanner.R
 import com.ingenico.innovationscanner.shared.CustomTopBar
+import com.ingenico.innovationscanner.utils.getActivity
 
 @Composable
 fun Cart(navController: NavHostController) {
@@ -51,7 +56,7 @@ fun CartPage(navController: NavHostController) {
             FloatingActionButton(
                 onClick = { launchScanner(context) }
             ) {
-                Icon(Icons.Filled.ShoppingCart,"Add")
+                Icon(Icons.Filled.AddCircle,"Add")
             }
         }
     )
@@ -59,7 +64,7 @@ fun CartPage(navController: NavHostController) {
 
 @Composable
 fun CartMainView() {
-    if (CartDataSource.getItems().isNotEmpty()) {
+    if (CartDataSource.stateList.isNotEmpty()) {
         CartListView()
     } else {
         CartEmptyView()
@@ -68,4 +73,5 @@ fun CartMainView() {
 
 fun launchScanner(context: Context) {
     Toast.makeText(context, "Launching Scanner", Toast.LENGTH_SHORT).show()
+    (context.getActivity() as MainActivity).scanBarcode()
 }

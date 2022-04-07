@@ -42,9 +42,9 @@ fun CartItemView(item: CartItem) {
                     .height(64.dp)
             )
             Column( modifier = Modifier.weight(0.8f)) {
-                Text(text = item.name)
+                Text(text = item.product.name)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "$ ${item.name}")
+                Text(text = "$ ${item.product.price}")
             }
             Text(text = "x ${item.qt}", modifier = Modifier.align(Alignment.CenterVertically))
             Row( modifier = Modifier.align(Alignment.CenterVertically)) {
