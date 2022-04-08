@@ -13,9 +13,8 @@ import com.ingenico.innovationscanner.product.ProductDataSource
 data class CartItem(val product: Product, var qt: Int = 1)
 
 object CartDataSource {
-    private val defaultList = mutableListOf<CartItem>()
-    var stateList by mutableStateOf(emptyList<CartItem>())
-
+    private val defaultList = mutableListOf<CartItem>(CartItem(ProductDataSource.getRandomProduct()))
+    var stateList by mutableStateOf(defaultList.toList())
 
     fun getItems() = defaultList
 
@@ -42,5 +41,9 @@ object CartDataSource {
     private fun update() {
         stateList = defaultList.toList()
     }
+
+    fun totalItems(): Int = defaultList.size
+
+    fun totalAmount(): Float = defaultList.map{cart -> cart.qt * cart.product.price}.reduce { acc, i -> acc + i  }
 
 }
