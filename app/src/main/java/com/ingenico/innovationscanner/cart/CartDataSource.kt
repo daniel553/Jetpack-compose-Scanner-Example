@@ -13,8 +13,8 @@ import com.ingenico.innovationscanner.product.ProductDataSource
 data class CartItem(val product: Product, var qt: Int = 1)
 
 object CartDataSource {
-    private val defaultList = mutableListOf<CartItem>(CartItem(ProductDataSource.getRandomProduct()))
-    var stateList by mutableStateOf(defaultList.toList())
+    private val defaultList = mutableListOf<CartItem>()
+    var stateList by mutableStateOf(emptyList<CartItem>())
 
     fun getItems() = defaultList
 

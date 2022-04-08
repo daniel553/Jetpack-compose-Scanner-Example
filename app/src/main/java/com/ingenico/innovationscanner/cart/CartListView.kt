@@ -1,5 +1,6 @@
 package com.ingenico.innovationscanner.cart
 
+import CustomDialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,6 +67,7 @@ fun CartListView() {
 
 @Composable
 fun TotalView() {
+    val openDialogCustom = remember{ mutableStateOf(false) }
     Row(
         modifier = Modifier
             .height(52.dp)
@@ -85,7 +89,7 @@ fun TotalView() {
             modifier = Modifier.weight(0.8f).padding(start= 4.dp, end = 4.dp)
         )
         Button(
-            onClick = { },
+            onClick = {openDialogCustom.value = true },
             shape = RoundedCornerShape(52.dp),
             modifier = Modifier
                 .height(52.dp),
@@ -93,5 +97,8 @@ fun TotalView() {
         ) {
             Text(text = "Checkout", color = com.ingenico.innovationscanner.ui.theme.Purple500 )
         }
+    }
+    if (openDialogCustom.value) {
+        CustomDialog(openDialogCustom = openDialogCustom)
     }
 }
