@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ingenico.innovationscanner.R
 import com.ingenico.innovationscanner.ui.theme.CartItemBackground
@@ -36,17 +37,17 @@ fun CartItemView(item: CartItem) {
             .padding(8.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_empty_cart),
+                painter = painterResource(id = item.product.img),
                 contentDescription = "Product",
                 modifier = Modifier
                     .height(64.dp)
             )
             Column( modifier = Modifier.weight(0.8f)) {
-                Text(text = item.product.name)
+                Text(text = item.product.name, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "$ ${item.product.price}")
+                Text(text =  "$ %.2f".format(item.product.price))
             }
-            Text(text = "x ${item.qt}", modifier = Modifier.align(Alignment.CenterVertically))
+            Text(text = "x${item.qt}", modifier = Modifier.align(Alignment.CenterVertically))
             Row( modifier = Modifier.align(Alignment.CenterVertically)) {
                 IconButton( onClick = { /*TODO*/ }) {
                     Icon(
