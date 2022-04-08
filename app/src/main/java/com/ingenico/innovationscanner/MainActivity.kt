@@ -48,6 +48,7 @@ class MainActivity : ComponentActivity() {
         } else {
             Toast.makeText(this@MainActivity, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
             CartDataSource.searchToAdd(result.contents)
+            Toast.makeText(this@MainActivity, "Total: " + CartDataSource.totalItems(), Toast.LENGTH_LONG).show()
         }
     }
 

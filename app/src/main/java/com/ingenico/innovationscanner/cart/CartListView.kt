@@ -39,7 +39,6 @@ fun CartEmptyView() {
     Text(
         text = "Start adding products to your cart!",
         fontSize = 22.sp,
-        //color = Color.Black
     )
     Spacer(modifier = Modifier.height(20.dp))
     Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
