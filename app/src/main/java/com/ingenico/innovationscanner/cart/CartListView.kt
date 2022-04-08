@@ -1,6 +1,7 @@
 package com.ingenico.innovationscanner.cart
 
 import CustomDialog
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,9 +57,10 @@ fun CartEmptyView() {
 }
 
 @Composable
-fun CartListView() {
+fun CartListView(cartItems: List<CartItem>) {
+    Log.d("Items", cartItems.toString())
     LazyColumn {
-        items(CartDataSource.getItems()) {
+        items(cartItems) {
             CartItemView(it)
         }
     }
@@ -85,7 +88,9 @@ fun TotalView() {
             text = "$"+"%.2f".format(CartDataSource.totalAmount()),
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(0.8f).padding(start= 4.dp, end = 4.dp)
+            modifier = Modifier
+                .weight(0.8f)
+                .padding(start = 4.dp, end = 4.dp)
         )
         Button(
             onClick = {openDialogCustom.value = true },

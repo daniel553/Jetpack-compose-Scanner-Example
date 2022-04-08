@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ingenico.innovationscanner.product.Product
@@ -13,20 +14,18 @@ import com.ingenico.innovationscanner.product.ProductDataSource
 data class CartItem(val product: Product, var qt: Int = 1)
 
 object CartDataSource {
-    private val defaultList = mutableListOf<CartItem>()
-    var stateList by mutableStateOf(emptyList<CartItem>())
+    private lateinit var stateList: SnapshotStateList<CartItem>
 
-    fun getItems() = defaultList
+    fun getItems() = stateList.toList()
 
     fun add(cartItem: CartItem) {
-        defaultList.add(cartItem)
-        update()
+        stateList.add(cartItem)
     }
 
     fun searchToAdd(barcode: String) {
         val product = ProductDataSource.getProduct(barcode)
         if (product?.barcode == barcode) {
-            val prevProd = defaultList.find { item -> item.product.barcode == barcode }
+            val prevProd = stateList.find { item -> item.product.barcode == barcode }
             if (prevProd != null) prevProd.qt += 1
             else add(CartItem(product, 1))
         }
@@ -34,16 +33,15 @@ object CartDataSource {
 
     @SuppressLint("NewApi")
     fun remove(id: Int) {
-        defaultList.removeIf { f -> f.product.id == id }
-        update()
+        stateList.removeIf { f -> f.product.id == id }
     }
 
-    private fun update() {
-        stateList = defaultList.toList()
+    fun totalItems(): Int = stateList.size
+
+    fun totalAmount(): Float = stateList.map{cart -> cart.qt * cart.product.price}.reduce { acc, i -> acc + i  }
+
+    fun registerCartItems(cartItems: SnapshotStateList<CartItem>) {
+        stateList = cartItems;
     }
-
-    fun totalItems(): Int = defaultList.size
-
-    fun totalAmount(): Float = defaultList.map{cart -> cart.qt * cart.product.price}.reduce { acc, i -> acc + i  }
 
 }
